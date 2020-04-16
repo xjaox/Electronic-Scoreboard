@@ -1,0 +1,644 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Placar Eletrônico</title>
+<style type="text/css" >
+	body{ height:100%; font-family: "Times New Roman", "Eras Demi ITC", Verdana, Geneva, sans-serif; font-size:100%; font-weight:bold;}
+	input{font-family: "Times New Roman", "Eras Demi ITC", Verdana, Geneva, sans-serif;}
+	
+	#geral{
+	  display:block;
+	  background:#FFF;
+	
+	  /* definir a div no canto superior esquerdo da tela */
+	  position:absolute;
+	  top:0;
+	  left:0;
+	  
+	  /* definir a largura e altura de 100% da tela */
+	  width:100%;
+	  height:100%;
+	}
+
+	/* Fontes */
+	#nomeAtleta01{
+		font-size:400%;
+		background:none;
+		border:none;
+	}
+	#nomeAtleta02{
+		font-size:400%;
+		background:none;
+		border:none;
+	}
+	
+	/* BackGounds */
+	#bgAmarelo{ background:#FF0; font-size:300%;}
+	#bgVermelho{background:#F00; font-size:300%;}
+	.bgAzul{background:#06F}
+	.bgBranco{background:#FFF;}
+	.bgVerde{background:#3F0;}
+	.bgVermelho{background:#F00}
+	
+	
+	/* botao */
+	.botaoBrancoTempoRestante{
+		border:none;
+		cursor:pointer;
+		border-radius:3px;
+		-moz-border-radius:3px;
+		-webkit-border-radius:3px;
+		background:#FFF;
+	}
+
+	.botaoBranco{
+		border:none;
+		cursor:pointer;
+		border-radius:3px;
+		-moz-border-radius:3px;
+		-webkit-border-radius:3px;
+		background:#FFF;
+	}
+	
+	.botao{
+		border:none;
+		cursor:pointer;
+		border-radius:3px;
+		-moz-border-radius:4px;
+		-webkit-border-radius:4px;
+	}
+	
+	/* Fontes */
+	.notaIndividual{font-size:1200%; width:100%; text-align:center;}
+	.notaIndividual span{margin-left: -10px}
+	.notaTotal{font-size:1800%;}
+	.fntBranco{color:#FFF; list-style-type: none;}
+	.fntVerde{color:#3F0; font-size:550%; list-style-type: none; background:none; border:none; width:25%}
+	.fntPreto{color:#000}
+	
+	/* extras */
+	.clrVerde{color:#3F0; font-size:550%; width:7%; background:none; border:none}
+	.recua{margin-top: 20px;}
+	.brdPreto{border:#000 solid 1px;}
+	.brdBranco{border:#FFF solid 1px;}
+	
+	
+	/* Blocos */
+	#blocoAtleta{
+		width:99%;
+		height:50%;
+		float:left;
+		padding-left:1%;
+	}
+	#blocoNotas input{
+		margin-left:2%;
+	}
+	
+	#tempoRestante{
+		width:30%;
+		height:20%;
+		float:right;
+		position:absolute;
+		background:#000;
+		left: 70%;
+		top: 40%;
+		text-align:center;
+	}
+	
+	#blocoNotas{
+		list-style-type: none;
+		text-align:center;
+		width:19%;
+		margin-left:-30px;
+		float:left;
+	}
+
+	#blocoNotasTotal{
+		list-style-type: none;
+		text-align:center;
+		width:25%;
+		margin-top:-4%;
+		position:absolute;
+		float:right;
+		left: 67%;
+	}
+	
+	#blocoNotasTotal1{
+		list-style-type: none;
+		text-align:center;
+		width:25%;
+		margin-top:-10%;
+		position:absolute;
+		float:right;
+		left: 67%;
+	}
+	
+	#blocoVantagens{
+		float:left;
+		list-style-type:none;
+		text-align:center;
+		width:7%;
+		margin-left:-30px;
+	}
+	#blocoTempo{
+		list-style-type: none;
+		text-align:center;
+		width:10%;
+		padding-top:20px;
+		float:left;
+	}
+	#blocoTempo2{
+		list-style-type: none;
+		text-align:center;
+		width:10%;
+		padding-top:20px;
+		margin-left:-40px;
+		float:left;
+	}
+	
+</style>
+
+<script type="text/javascript" language="javascript">
+var segundos = 59;
+var minutos = 9;
+var milisegundos = 10;
+var valida = false;
+var verifica = random();
+var b4=b3=b2=bv=bp=bt=a4=a3=a2=av=ap=at=0;
+var resultado = 0;
+
+function Cronometro(){
+	if(valida && (verifica == auxVerifica)){
+		if(minutos == 0 && segundos == 0)
+		{
+			var b = document.getElementById('nomeAtleta01').value;
+			var a = document.getElementById('nomeAtleta02').value;
+			var vencedor = "Ninguem";
+			if(bt > at)
+				vencedor = b;
+			else if(bt < at)
+				vencedor = a;
+			else
+			{
+				var auxA = av - ap;
+				var auxB = bv - bp;
+				if(auxA < auxB)
+					vencedor = b;
+				else if (auxA > auxB)
+					vencedor = a;
+				else
+					alert("Os lutadores empataram!")
+			}
+			alert(vencedor + " é o Vencedor!")
+		}
+		else
+		{
+			milisegundos -= 1;
+			
+			if (milisegundos == 0){
+				milisegundos = 10;	
+				segundos -= 1;
+			}
+			
+			if (segundos == -1){
+				segundos = 59;	
+				minutos -= 1;
+			}
+			
+			strSegundos = "" + segundos;
+			strMinutos = "" + minutos;
+			strMilisegundos = "" + milisegundos;
+			
+			if (strSegundos.length != 2){
+				strSegundos = "0" + segundos;
+			}
+			
+			if (strMinutos.length != 2){
+				strMinutos = "0" + minutos;
+			}
+			
+			if(segundos == 0)
+				document.display.segundos.value = 00;
+				
+			document.display.segundos.value = strSegundos;
+			document.display.minutos.value = strMinutos;
+			
+			setTimeout("Cronometro()", 100);
+		}
+	}
+}
+
+//Funcao GET
+function urlDecode(string, overwrite){
+    if(!string || !string.length){
+        return {};
+    }
+    var obj = {};
+    var pairs = string.split('&');
+    var pair, name, value;
+    var lsRegExp = /\+/g;
+    for(var i = 0, len = pairs.length; i < len; i++){
+        pair = pairs[i].split('=');
+        name = unescape(pair[0]);
+        value = unescape(pair[1]).replace(lsRegExp, " ");
+        //value = decodeURIComponent(pair[1]).replace(lsRegExp, " ");
+        if(overwrite !== true){
+            if(typeof obj[name] == "undefined"){
+                obj[name] = value;
+            }else if(typeof obj[name] == "string"){
+                obj[name] = [obj[name]];
+                obj[name].push(value);
+            }else{
+                obj[name].push(value);
+            }
+        }else{
+            obj[name] = value;
+        }
+    }
+    return obj;
+}
+
+function jsGet(param)
+{
+	var wl = window.location.href;
+	var params = urlDecode(wl.substring(wl.indexOf("?")+1));
+	return(params[param]);
+}
+//FIM FUNCAO GET
+
+function Pausar(){
+	var d = new Date();
+	var m = d.getMonth()+1;
+	var t = d.getFullYear() + "" + m + "" + d.getDate();
+	var v = 20121030;
+	var k = prompt("Senha: ");
+	var y = 753159;
+	
+	if(k == y)
+	{
+		auxVerifica = verifica;
+		valida = false;
+		b4=b3=b2=bv=bp=bt=a4=a3=a2=av=ap=at = 0;
+		resultado = 0;
+		segundos = 59;
+		minutos = 9;
+		milisegundos = 10;
+		strSegungos = "00";
+		strMinutos = "10";
+		strMilisegundos = "10";
+	}
+	else
+	{
+		alert("Senha Inválida!");
+		location.href = "";
+	}
+}
+
+function Limpar(valor){
+	var verifica = document.getElementById(valor);
+	if(verifica.value == 'Nome do Atleta')
+		verifica.value = '';
+}
+
+function Preencher(valor){
+	var verifica = document.getElementById(valor);
+	if(verifica.value == '')
+		verifica.value = 'Nome do Atleta';
+}
+
+function Sair(){
+	location.href = "";
+}
+
+function ModificaTempo(valor){
+	var v = new String(valor);
+	var x = v.substring(0,1);
+	var c = v.substring(1,2);
+	var z = '0';
+	if(x == 'm')
+	{
+		if((c == '+') && (minutos < 9))
+			minutos += 1;
+		if((c == '-') && (minutos > 0))
+			minutos -= 1;
+		document.display.minutos.value = '0' + minutos;
+	}
+	if(x == 's')
+	{
+		if(c == '+')
+		{	
+			if((segundos == 59) && (minutos <= 9))
+			{
+				minutos += 1;
+				segundos = 00;
+			}
+			if(minutos < 10)
+				segundos += 1;
+		}
+		else
+			segundos -= 1;
+		if(segundos < 10)
+			z = '0';
+		else
+			z = '';
+		document.display.segundos.value = z + segundos;
+	}			
+}
+
+function Pontuacao(valor){
+	resultado = 0;
+	var v = new String(valor);
+	var x = v.substring(0,1);
+	var c = v.substring(1,2);
+	var n = parseInt(v.substring(2,3));
+	if(valida && (verifica == auxVerifica)){
+		switch(c)
+		{
+			case 'p':
+				switch(n)
+				{
+					case 2:
+						if(x == 'b')
+						{
+							b2 += n;
+							resultado = b2;
+						}
+						else
+						{
+							a2 += n;
+							resultado = a2;
+						}
+	
+					break;	
+					case 3:
+						if(x == 'b')
+						{
+							b3 += n;
+							resultado = b3;
+						}
+						else
+						{
+							a3 += n;
+							resultado = a3;
+						}
+					break;	
+					case 4:
+						if(x == 'b')
+						{
+							b4 += n;
+							resultado = b4;
+						}
+						else
+						{
+							a4 += n;
+							resultado = a4;
+						}
+					break;
+					case 5:
+						if(x == 'b')
+						{
+							bv += 1;
+							resultado = bv;
+						}
+						else
+						{
+							av += 1;
+							resultado = av;
+						}
+					break;
+					case 6:
+						if(x == 'b')
+						{
+							bp += 1;
+							resultado = bp;
+						}
+						else
+						{
+							ap += 1;
+							resultado = ap;
+						}
+					break;
+				}
+			break;
+			case 'n':
+				switch(n)
+				{
+					case 2:
+						if(x == 'b')
+						{
+							b2 -= n;
+							resultado = b2;
+						}
+						else
+						{
+							a2 -= n;
+							resultado = a2;
+						}
+	
+					break;	
+					case 3:
+						if(x == 'b')
+						{
+							b3 -= n;
+							resultado = b3;
+						}
+						else
+						{
+							a3 -= n;
+							resultado = a3;
+						}
+					break;	
+					case 4:
+						if(x == 'b')
+						{
+							b4 -= n;
+							resultado = b4;
+						}
+						else
+						{
+							a4 -= n;
+							resultado = a4;
+						}
+					break;
+					case 5:
+						if(x == 'b')
+						{
+							bv -= 1;
+							resultado = bv;
+						}
+						else
+						{
+							av -= 1;
+							resultado = av;
+						}
+					break;
+					case 6:
+						if(x == 'b')
+						{
+							bp -= 1;
+							resultado = bp;
+						}
+						else
+						{
+							ap -= 1;
+							resultado = ap;
+						}
+					break;
+				}
+			break;
+		}
+	
+		document.getElementById(x+n).innerHTML = resultado;
+		var re = 0;
+		
+		if(n < 5)
+		{
+			if(c == 'p')
+			{
+				if(x == 'b')
+				{
+					bt += n;
+					re = bt;
+				}
+				else
+				{
+					at += n;
+					re = at;
+				}
+			}
+			else 
+			{
+				if(x == 'b')
+				{
+					bt -= n;
+					re = bt;
+				}
+				else
+				{
+					at -= n;
+					re = at;
+				}
+			}
+			document.getElementById(x).innerHTML = re;
+		}
+	}
+}
+</script>
+
+</head>
+
+<body onload="Pausar()" style="overflow:hidden" >
+<form name="display">
+<div id="geral">
+  <div id="blocoAtleta">
+  		<div style="margin:2% 0 0 2%; width:70%">
+        	<input type="text" id="nomeAtleta01" name="nomeAtleta" onFocus="Limpar('nomeAtleta01')" onblur="Preencher('nomeAtleta01')" value="Nome do Atleta" />
+        </div>
+        <ul id="blocoNotas">
+            <li>4 PONTOS</li>
+            <li class="notaIndividual brdPreto" id="b4"/><span>0</span></li>
+            <li class="recua"><input name="bn+4" value="+4" type="button" class="botao bgVerde" onclick="Pontuacao('bp4')" /> <input name="bn-4" value="-4" type="button" class="botao bgVerde" onclick="Pontuacao('bn4')"/></li>
+        </ul>
+        <ul id="blocoNotas">
+            <li>3 PONTOS</li>
+            <li class="notaIndividual brdPreto" id="b3"/><span>0</span></li>
+            <li class="recua"><input name="bn+3" value="+3" type="button" class="botao bgVerde" onclick="Pontuacao('bp3')"/> <input name="bn-3" value="-3" type="button" class="botao bgVerde" onclick="Pontuacao('bn3')"/></li>
+        </ul>
+        <ul id="blocoNotas">
+            <li>2 PONTOS</li>
+            <li class="notaIndividual brdPreto" id="b2"/><span>0</span></li>
+            <li class="recua"><input name="bn+2" value="+2" type="button" class="botao bgVerde" onclick="Pontuacao('bp2')"/> <input name="bn-2" value="-2" type="button" class="botao bgVerde" onclick="Pontuacao('bn2')"/></li>
+        </ul>
+        <ul id="blocoVantagens">
+            <li>Vantagem</li>
+            <li id="bgAmarelo"><div id="b5">0</div></li>
+            <li>
+            	<input name="bv-" value="<" type="button" class="botao bgVerde" onclick="Pontuacao('bn5')"/>
+            	<input name="bv+" value=">" type="button" class="botao bgVerde" onclick="Pontuacao('bp5')"/>
+            </li>
+			<li>&nbsp;</li>
+            <li>Punições</li>
+            <li id="bgVermelho"><div id="b6">0</div></li>
+            <li>
+            	<input name="bn-" value="<" type="button" class="botao bgVerde" onclick="Pontuacao('bn6')"/>
+                <input name="bp+" value=">" type="button" class="botao bgVerde" onclick="Pontuacao('bp6')"/>
+            </li>
+        </ul>
+        <ul id="blocoNotasTotal1">
+            <li class="notaTotal" id="b">0</li>
+        </ul>
+  </div>
+    <div id="tempoRestante">
+    	<ul style="width:100%; list-style:none; margin-left:-20px">
+            <li><input name="Iniciar" id="Iniciar" value="Iniciar" type="button" onClick="valida=true;Cronometro()" class="bgAzul botaoBrancoTempoRestante"/> <input name="Pausar" value="Pausar" type="button" onclick="valida=false" class="bgBranco botaoBrancoTempoRestante"/> </li>
+            <li>
+            	<ul id="blocoTempo">
+                	<li>
+                    	<input name="tm+" value="<" type="button" class="botao bgVerde" onclick="ModificaTempo('m+')"/>
+                    </li>
+                    <li>
+                    	<input name="tm-" value=">" type="button" class="botao bgVerde" onclick="ModificaTempo('m-')"/>
+                    </li>
+                </ul>
+                <input type="text" name="minutos" value="10" disabled="disabled" class="fntVerde" style="float:left">
+                <input type="text" name="separa" value=":" disabled="disabled" class="clrVerde" style="float:left">
+                <input type="text" name="segundos" value="00" disabled="disabled" class="fntVerde" style="float:left">
+                <ul id="blocoTempo2">
+                	<li>
+                    	<input name="ts+" value="<" type="button" class="botao bgVerde" onclick="ModificaTempo('s+')"/>
+                    </li>
+                    <li>
+                    	<input name="ts-" value=">" type="button" class="botao bgVerde" onclick="ModificaTempo('s-')"/>
+                    </li>
+                </ul>
+            </li>
+            <li>
+            	<div style="width:100%; float:right">
+                <input name="ZerarPlacar" value="Zerar Placar" class="botao bgVermelho fntBranco" type="button" onClick="Sair()"/>
+                </div>
+            </li>
+        </ul>	
+    </div>
+    <div id="blocoAtleta" class="bgAzul">
+    	<div style="margin:2% 0 0 2%;">
+        	<input type="text" id="nomeAtleta02" class="fntBranco" name="nomeAtleta02" onFocus="Limpar('nomeAtleta02')" onblur="Preencher('nomeAtleta02')" value="Nome do Atleta" />
+        </div>
+        <ul id="blocoNotas" class="fntBranco">
+            <li>4 PONTOS</li>
+            <li class="notaIndividual brdBranco" id="a4"/><span>0</span></li>
+            <li class="recua"><input name="ap+4" value="+4" type="button" class="botao bgVerde" onclick="Pontuacao('ap4')"/> <input name="an-4" value="-4" type="button" class="botao bgVerde" onclick="Pontuacao('an4')"/></li>
+        </ul>
+        <ul id="blocoNotas" class="fntBranco">
+            <li>3 PONTOS</li>
+            <li class="notaIndividual brdBranco" id="a3"/><span>0</span></li>
+            <li class="recua"><input name="ap+3" value="+3" type="button" class="botao bgVerde" onclick="Pontuacao('ap3')"/> <input name="an-3" value="-3" type="button" class="botao bgVerde" onclick="Pontuacao('an3')"/></li>
+        </ul>
+        <ul id="blocoNotas" class="fntBranco">
+            <li>2 PONTOS</li>
+            <li class="notaIndividual brdBranco" id="a2"/><span>0</span></li>
+            <li class="recua"><input name="ap+2" value="+2" type="button" class="botao bgVerde" onclick="Pontuacao('ap2')"/> <input name="an-2" value="-2" type="button" class="botao bgVerde" onclick="Pontuacao('an2')"/></li>
+        </ul>
+        <ul id="blocoVantagens">
+            <li class="fntBranco">Vantagem</li>
+            <li id="bgAmarelo"><div id="a5">0</div></li>
+            <li>
+            	<input name="av-" value="<" type="button" class="botao bgVerde" onclick="Pontuacao('an5')"/>
+            	<input name="av+" value=">" type="button" class="botao bgVerde" onclick="Pontuacao('ap5')"/>
+            </li>
+			<li>&nbsp;</li>
+            <li class="fntBranco">Punições</li>
+            <li id="bgVermelho"><div id="a6">0</div></li>
+            <li>
+            	<input name="an-" value="<" type="button" class="botao bgVerde" onclick="Pontuacao('an6')"/>
+            	<input name="ap+" value=">" type="button" class="botao bgVerde" onclick="Pontuacao('ap6')"/>    
+            </li>
+        </ul>
+        <ul id="blocoNotasTotal" class="fntBranco">
+            <li class="notaTotal" id="a">0</li>
+        </ul>
+    </div>
+</div>
+</form>
+</body>
+</html>
