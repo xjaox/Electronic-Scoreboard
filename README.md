@@ -1,5 +1,5 @@
 # Electronic Scoreboard
-It's an application to show scoreboard on TV of the current fight class. 
+It's an application to show scoreboard on TV of the current fight game. 
 The scores are input by a judge.
 This is a simple Web Application developed in JavaScript language.
 
